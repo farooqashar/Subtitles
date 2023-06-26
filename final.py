@@ -10,20 +10,23 @@ def time_to_seconds(time):
 
 # Creating TextClip objects for each subtitle in the SRT file with some styling
 def create_subtitle_text_clips(subtitles, video_size):
-    subtitle_clips = []
 
+    video_width, video_height = video_size
+
+    subtitle_clips = []
     for subtitle in subtitles:
         # Getting time information
         start_time = time_to_seconds(subtitle.start)
         end_time = time_to_seconds(subtitle.end)
         subtitle_duration = end_time - start_time
 
-        video_width, video_height = video_size
-        size=(video_width * 3/4, None)
-
-        # Creating subtitle TextClip with some attributes(duration, start time, styling)
+        # splitting the subtitle text by a new line to get 
         other_language, english = subtitle.text.split("\n")
 
+        # Size of the subtitle picture/box in pixels (height is auto-determined/None)
+        size=(video_width * 3/4, None) 
+
+        # Creating subtitle TextClips with some attributes(duration, start time, styling)
         other_language_text_clip = TextClip(other_language, fontsize=24, font="Arial", color="red", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
         english_clip = TextClip(english, fontsize=18, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
