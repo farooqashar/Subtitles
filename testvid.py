@@ -1,17 +1,3 @@
-# from moviepy.video.tools.subtitles import SubtitlesClip
-# from moviepy.editor import *
-
-# video = VideoFileClip("bruh.mp4")
-# subtitles = SubtitlesClip("subtitles.srt")
-
-# subtitles = subtitles.set_duration(video.duration)
-# subtitles = subtitles.set_position(("center", "bottom"))
-# subtitles.on_color(size=(100,100))
-
-
-# final_video = CompositeVideoClip([video, subtitles])
-# final_video.write_videofile("output.mp4")
-
 import pysrt
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 
