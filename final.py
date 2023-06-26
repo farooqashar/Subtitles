@@ -67,9 +67,11 @@ for file_name in os.listdir(input_folder_path):
     # Check if the file is a video file
     if file_name.endswith('.mp4'):
 
+        file_name_root = os.path.splitext(file_name)[0]
+
         # Construct the full file paths
         video_file_input_path = os.path.join(input_folder_path, file_name)
-        subtitles_file_path = os.path.join(input_folder_path, f'{os.path.splitext(file_name)[0]}.srt')
+        subtitles_file_path = os.path.join(input_folder_path, f'{file_name_root}.srt')
 
         # Loading input video and opening subtitles file
         video = VideoFileClip(video_file_input_path)
@@ -80,4 +82,4 @@ for file_name in os.listdir(input_folder_path):
         # Burning subtitles and outputting video
         final_video = CompositeVideoClip([video] + subtitle_clips)
         os.chdir(output_folder_path)
-        final_video.write_videofile(f'{os.path.splitext(file_name)[0]}_output.mp4')
+        final_video.write_videofile(f'{file_name_root}_output.mp4', remove_temp=True, audio=True, audio_codec='libmp3lame', temp_audiofile=f'{file_name_root}_outputTEMP_MPY_wvf_snd.mp3')
