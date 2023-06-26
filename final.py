@@ -1,5 +1,6 @@
 import pysrt
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
+import os
 
 # Convert a time object from the SRT file(i.e. 00:00:40,822) into total seconds
 def time_to_seconds(time):
@@ -46,12 +47,37 @@ def create_subtitle_text_clips(subtitles, video_size):
 
     return subtitle_clips
 
-# Loading input video and opening subtitles file
-video = VideoFileClip("input.mp4")
-subtitles = pysrt.open("subtitles.srt")
 
-subtitle_clips = create_subtitle_text_clips(subtitles,video.size)
+# Define the input folder path
+adan_input = "/Users/adana/Downloads/Subtitles/Subtitles/input"
+ashar_input = "/Users/asharfarooq/Downloads/Uliza/Subtitles/input"
+input_folder_path = ashar_input  # Update with your input folder path
 
-# Burning subtitles and outputting video
-final_video = CompositeVideoClip([video] + subtitle_clips)
-final_video.write_videofile("output.mp4")
+# Define the output folder path
+adan_output = "/Users/adana/Downloads/Subtitles/Subtitles/output"
+ashar_output = "/Users/asharfarooq/Downloads/Uliza/Subtitles/output"
+output_folder_path = ashar_output  # Update with your output folder path
+
+# Create the output folder if it doesn't exist
+if not os.path.exists(output_folder_path):
+    os.makedirs(output_folder_path)
+
+# Iterate over each file in the input folder
+for file_name in os.listdir(input_folder_path):
+    # Check if the file is a video file
+    if file_name.endswith('.mp4'):
+
+        # Construct the full file paths
+        video_file_input_path = os.path.join(input_folder_path, file_name)
+        subtitles_file_path = os.path.join(input_folder_path, f'{os.path.splitext(file_name)[0]}.srt')
+
+        # Loading input video and opening subtitles file
+        video = VideoFileClip(video_file_input_path)
+        subtitles = pysrt.open(subtitles_file_path)
+
+        subtitle_clips = create_subtitle_text_clips(subtitles,video.size)
+
+        # Burning subtitles and outputting video
+        final_video = CompositeVideoClip([video] + subtitle_clips)
+        os.chdir(output_folder_path)
+        final_video.write_videofile(f'{os.path.splitext(file_name)[0]}_output.mp4')
