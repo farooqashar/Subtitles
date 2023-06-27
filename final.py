@@ -69,6 +69,9 @@ for file_name in os.listdir(input_folder_path):
 
         file_name_root = os.path.splitext(file_name)[0]
 
+        if f'{file_name_root}.srt' not in list(os.listdir(input_folder_path)):
+            raise Exception(f'Please ensure that an .srt file with the same name({file_name_root}) as the video file is in this input folder.')
+
         # Construct the full file paths
         video_file_input_path = os.path.join(input_folder_path, file_name)
         subtitles_file_path = os.path.join(input_folder_path, f'{file_name_root}.srt')
