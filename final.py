@@ -41,7 +41,7 @@ def create_subtitle_text_clips(subtitles, video_size):
         subtitle_clips.append(other_language_text_clip.set_position(text_position_non_eng))
 
         # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
-        subtitle_y_position_eng = (video_height * 8/10) + other_language_text_clip.size[1]
+        subtitle_y_position_eng = subtitle_y_position_non_eng + other_language_text_clip.size[1]
         text_position_eng = (subtitle_x_position, subtitle_y_position_eng)   
         subtitle_clips.append(english_clip.set_position(text_position_eng))
 
