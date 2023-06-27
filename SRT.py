@@ -41,7 +41,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
 
 # Usage example
-csv_file_path = 'Parsing2/output/sample2.csv'
+csv_file_path = 'Parsing2/output/sample3.csv'
 srt_file_path = 'subtitlessss.srt'
 generate_srt_file(csv_file_path, srt_file_path)
 
