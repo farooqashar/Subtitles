@@ -22,7 +22,7 @@ def create_subtitle_text_clips(subtitles, video_size):
         subtitle_duration = end_time - start_time
 
         # splitting the subtitle text by a new line to get english text and the other language text of subtitle
-        other_language, english = subtitle.text.split("\n")
+        english, other_language = subtitle.text.split("--")
 
         # Size of the subtitle picture/box in pixels (height is auto-determined/None)
         size=(video_width * 3/4, None) 
