@@ -22,7 +22,7 @@ def create_subtitle_text_clips(subtitles, video_size):
         subtitle_duration = end_time - start_time
 
         # splitting the subtitle text by a new line to get english text and the other language text of subtitle
-        other_language, english = subtitle.text.split("\n")
+        english, other_language = subtitle.text.split("--")
 
         # Size of the subtitle picture/box in pixels (height is auto-determined/None)
         size=(video_width * 3/4, None) 
@@ -41,7 +41,7 @@ def create_subtitle_text_clips(subtitles, video_size):
         subtitle_clips.append(other_language_text_clip.set_position(text_position_non_eng))
 
         # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
-        subtitle_y_position_eng = (video_height * 8/10) + other_language_text_clip.size[1]
+        subtitle_y_position_eng = subtitle_y_position_non_eng + other_language_text_clip.size[1]
         text_position_eng = (subtitle_x_position, subtitle_y_position_eng)   
         subtitle_clips.append(english_clip.set_position(text_position_eng))
 
@@ -68,6 +68,9 @@ for file_name in os.listdir(input_folder_path):
     if file_name.endswith('.mp4'):
 
         file_name_root = os.path.splitext(file_name)[0]
+
+        if f'{file_name_root}.srt' not in list(os.listdir(input_folder_path)):
+            raise Exception(f'Please ensure that an .srt file with the same name({file_name_root}) as the video file is in this input folder.')
 
         # Construct the full file paths
         video_file_input_path = os.path.join(input_folder_path, file_name)
