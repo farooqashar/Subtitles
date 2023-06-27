@@ -84,5 +84,9 @@ for file_name in os.listdir(input_folder_path):
 
         # Burning subtitles and outputting video
         final_video = CompositeVideoClip([video] + subtitle_clips)
+
+        # Preview Video Without Writing(frame at 7.5 seconds)
+        # final_video.show(7.5, interactive = True)
+
         os.chdir(output_folder_path)
         final_video.write_videofile(f'{file_name_root}_output.mp4', remove_temp=True, audio=True, audio_codec='libmp3lame', temp_audiofile=f'{file_name_root}_outputTEMP_MPY_wvf_snd.mp3')
