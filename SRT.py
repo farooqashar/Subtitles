@@ -19,42 +19,89 @@ def generate_srt_file(csv_file_path, srt_file_path):
             start_time = row[0] + ",000"
             start_time = start_time.replace(" ", "")
             next_row = reader_list[row_index]
-            end_time = next_row[0] + ",000"
-            end_time = end_time.replace(" ", "")
-            subtitle_text_1 = row[1]
-            subtitle_text_2 = row[2]
+            print(next_row[0])
+            #if time is an empty string
+            if next_row[0] is "":
+                print("reached")
+                next_row_2 = reader_list[row_index + 1]
+                end_time = next_row_2[0] + ",000"
+                print(end_time)
+                print("---")
+                end_time = end_time.replace(" ", "")
+                subtitle_text_1 = row[1] + next_row[1]
+                subtitle_text_2 = row[2] + next_row[2]
 
-            #removing the first word of English 
-            split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-            print(split_subtitle_text_1)
-            if len(split_subtitle_text_1) > 1:
-                subtitle_text_1 = split_subtitle_text_1[1]
+                #removing the first word of English 
+                split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
+                #print(split_subtitle_text_1)
+                if len(split_subtitle_text_1) > 1:
+                    subtitle_text_1 = split_subtitle_text_1[1]
+                else:
+                    subtitle_text_1 = ""
+
+                # #removing everything before ":"
+
+                # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
+                # print(split_subtitle_text_1)
+                # if len(split_subtitle_text_1) > 1:
+                #     subtitle_text_1 = split_subtitle_text_1[1]
+                # else:
+                #     subtitle_text_1 = ""
+
+
+                #removing first word from non-english subtitles
+
+                # split_subtitle_text_2 = subtitle_text_2.split(' ', 1)
+                # if len(split_subtitle_text_2) > 1:
+                #     subtitle_text_2 = split_subtitle_text_2[1]
+                # else:
+                #     subtitle_text_2 = ""
+
+                #add column after non english speaker:
+                subtitle_text_2_ls = subtitle_text_2.split()
+                if len(subtitle_text_2_ls) > 0:
+                    subtitle_text_2_ls[0] += ":"
+                subtitle_text_2 = ' '.join(subtitle_text_2_ls)
+
+
             else:
-                subtitle_text_1 = ""
+                end_time = next_row[0] + ",000"
+            
+                end_time = end_time.replace(" ", "")
+                subtitle_text_1 = row[1] 
+                subtitle_text_2 = row[2]
 
-            # #removing everything before ":"
+                #removing the first word of English 
+                split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
+                #print(split_subtitle_text_1)
+                if len(split_subtitle_text_1) > 1:
+                    subtitle_text_1 = split_subtitle_text_1[1]
+                else:
+                    subtitle_text_1 = ""
 
-            # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
-            # print(split_subtitle_text_1)
-            # if len(split_subtitle_text_1) > 1:
-            #     subtitle_text_1 = split_subtitle_text_1[1]
-            # else:
-            #     subtitle_text_1 = ""
+                # #removing everything before ":"
+
+                # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
+                # print(split_subtitle_text_1)
+                # if len(split_subtitle_text_1) > 1:
+                #     subtitle_text_1 = split_subtitle_text_1[1]
+                # else:
+                #     subtitle_text_1 = ""
 
 
-            #removing first word from non-english subtitles
+                #removing first word from non-english subtitles
 
-            # split_subtitle_text_2 = subtitle_text_2.split(' ', 1)
-            # if len(split_subtitle_text_2) > 1:
-            #     subtitle_text_2 = split_subtitle_text_2[1]
-            # else:
-            #     subtitle_text_2 = ""
+                # split_subtitle_text_2 = subtitle_text_2.split(' ', 1)
+                # if len(split_subtitle_text_2) > 1:
+                #     subtitle_text_2 = split_subtitle_text_2[1]
+                # else:
+                #     subtitle_text_2 = ""
 
-            #add column after non english speaker:
-            subtitle_text_2_ls = subtitle_text_2.split()
-            if len(subtitle_text_2_ls) > 0:
-                subtitle_text_2_ls[0] += ":"
-            subtitle_text_2 = ' '.join(subtitle_text_2_ls)
+                #add column after non english speaker:
+                subtitle_text_2_ls = subtitle_text_2.split()
+                if len(subtitle_text_2_ls) > 0:
+                    subtitle_text_2_ls[0] += ":"
+                subtitle_text_2 = ' '.join(subtitle_text_2_ls)
 
 
             srt_file.write(str(subtitle_count) + '\n')
