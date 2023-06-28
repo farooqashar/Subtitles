@@ -21,8 +21,23 @@ def create_subtitle_text_clips(subtitles, video_size):
         end_time = time_to_seconds(subtitle.end)
         subtitle_duration = end_time - start_time
 
-        # splitting the subtitle text by a new line to get english text and the other language text of subtitle
+        # Splitting the subtitle text by a new line to get english text and the other language text of subtitle
         english, other_language = subtitle.text.split("--")
+
+        # Handling colors of non-Eng language
+        non_eng_language_color = 'red'
+        # Afrikaan language
+        if "$" in other_language:
+            non_eng_language_color = 'red'
+            other_language=other_language.replace("$","")
+        # Nama language
+        if "+" in other_language:
+            non_eng_language_color = 'yellow'
+            other_language=other_language.replace("+","")
+        # N|uu language            
+        if ">" in other_language:
+            non_eng_language_color = 'cyan'
+            other_language=other_language.replace(">","")
 
         # Size of the subtitle picture/box in pixels (height is auto-determined/None)
         size=(video_width, None) 
@@ -31,19 +46,14 @@ def create_subtitle_text_clips(subtitles, video_size):
         # print(TextClip.list('color')) or print(TextClip.list('font'))
 
         # Creating subtitle TextClips with some attributes(duration, start time, styling)
-        other_language_text_clip = TextClip(other_language, fontsize=22, font="Arial", color="red", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
-        english_clip = TextClip(english, fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
+        other_language_text_clip = TextClip(''.join(other_language.splitlines()), fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
+        english_clip = TextClip(''.join(english.splitlines()), fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
-        subtitle_x_position = 'center'
         # Positioning and handling the subtitle for the non-English language
-        subtitle_y_position_non_eng = video_height * 0
-        text_position_non_eng = (subtitle_x_position, subtitle_y_position_non_eng)   
-        subtitle_clips.append(other_language_text_clip.set_position(text_position_non_eng))
+        subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
 
         # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
-        subtitle_y_position_eng = video_height * 9/10
-        text_position_eng = (subtitle_x_position, subtitle_y_position_eng)   
-        subtitle_clips.append(english_clip.set_position(text_position_eng))
+        subtitle_clips.append(english_clip.set_position(("center", "bottom")))
 
     return subtitle_clips
 
@@ -77,7 +87,10 @@ for file_name in os.listdir(input_folder_path):
         subtitles_file_path = os.path.join(input_folder_path, f'{file_name_root}.srt')
 
         # Loading input video and opening subtitles file
-        video = VideoFileClip(video_file_input_path)
+        # video = VideoFileClip(video_file_input_path)
+        # if video is too long to test, take a subclip of upto 56 seconds
+        video = VideoFileClip(video_file_input_path).subclip(0,56)
+
         subtitles = pysrt.open(subtitles_file_path)
 
         subtitle_clips = create_subtitle_text_clips(subtitles,video.size)
@@ -85,8 +98,8 @@ for file_name in os.listdir(input_folder_path):
         # Burning subtitles and outputting video
         final_video = CompositeVideoClip([video] + subtitle_clips)
 
-        # Preview Video Without Writing(frame at 7.5 seconds)
-        # final_video.show(7.5, interactive = True)
+        # Preview Video Without Writing(frame at 22 seconds)
+        # final_video.show(22, interactive = True)
 
         os.chdir(output_folder_path)
         final_video.write_videofile(f'{file_name_root}_output.mp4', remove_temp=True, audio=True, audio_codec='libmp3lame', temp_audiofile=f'{file_name_root}_outputTEMP_MPY_wvf_snd.mp3')
