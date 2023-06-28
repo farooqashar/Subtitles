@@ -92,7 +92,10 @@ for file_name in os.listdir(input_folder_path):
         subtitles_file_path = os.path.join(input_folder_path, f'{file_name_root}.srt')
 
         # Loading input video and opening subtitles file
-        video = VideoFileClip(video_file_input_path)
+        # video = VideoFileClip(video_file_input_path)
+        # if video is too long to test, take a subclip of upto 56 seconds
+        video = VideoFileClip(video_file_input_path).subclip(0,56)
+
         subtitles = pysrt.open(subtitles_file_path)
 
         subtitle_clips = create_subtitle_text_clips(subtitles,video.size)
