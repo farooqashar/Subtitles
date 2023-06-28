@@ -12,7 +12,7 @@ def time_to_seconds(time):
 # Creating TextClip objects for each subtitle in the SRT file with some styling
 def create_subtitle_text_clips(subtitles, video_size):
 
-    video_width, video_height = video_size
+    video_width, _ = video_size
 
     subtitle_clips = []
     for subtitle in subtitles:
