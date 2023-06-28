@@ -21,8 +21,23 @@ def create_subtitle_text_clips(subtitles, video_size):
         end_time = time_to_seconds(subtitle.end)
         subtitle_duration = end_time - start_time
 
-        # splitting the subtitle text by a new line to get english text and the other language text of subtitle
+        # Splitting the subtitle text by a new line to get english text and the other language text of subtitle
         english, other_language = subtitle.text.split("--")
+
+        # Handling colors of non-Eng language
+        non_eng_language_color = 'red'
+        # Afrikaan language
+        if "$" in other_language:
+            non_eng_language_color = 'red'
+            other_language=other_language.replace("$","")
+        # Nama language
+        if "+" in other_language:
+            non_eng_language_color = 'yellow'
+            other_language=other_language.replace("+","")
+        # N|uu language            
+        if ">" in other_language:
+            non_eng_language_color = 'cyan'
+            other_language=other_language.replace(">","")
 
         # Size of the subtitle picture/box in pixels (height is auto-determined/None)
         size=(video_width, None) 
@@ -31,7 +46,7 @@ def create_subtitle_text_clips(subtitles, video_size):
         # print(TextClip.list('color')) or print(TextClip.list('font'))
 
         # Creating subtitle TextClips with some attributes(duration, start time, styling)
-        other_language_text_clip = TextClip(other_language, fontsize=22, font="Arial", color="red", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
+        other_language_text_clip = TextClip(other_language, fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
         english_clip = TextClip(english, fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
         subtitle_x_position = 'center'
