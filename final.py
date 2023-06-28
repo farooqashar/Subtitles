@@ -46,8 +46,8 @@ def create_subtitle_text_clips(subtitles, video_size):
         # print(TextClip.list('color')) or print(TextClip.list('font'))
 
         # Creating subtitle TextClips with some attributes(duration, start time, styling)
-        other_language_text_clip = TextClip(other_language, fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
-        english_clip = TextClip(english, fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
+        other_language_text_clip = TextClip(''.join(other_language.splitlines()), fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
+        english_clip = TextClip(''.join(english.splitlines()), fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
         # Positioning and handling the subtitle for the non-English language
         subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
@@ -98,8 +98,8 @@ for file_name in os.listdir(input_folder_path):
         # Burning subtitles and outputting video
         final_video = CompositeVideoClip([video] + subtitle_clips)
 
-        # Preview Video Without Writing(frame at 7.5 seconds)
-        # final_video.show(7.5, interactive = True)
+        # Preview Video Without Writing(frame at 22 seconds)
+        # final_video.show(22, interactive = True)
 
         os.chdir(output_folder_path)
         final_video.write_videofile(f'{file_name_root}_output.mp4', remove_temp=True, audio=True, audio_codec='libmp3lame', temp_audiofile=f'{file_name_root}_outputTEMP_MPY_wvf_snd.mp3')
