@@ -24,18 +24,37 @@ def generate_srt_file(csv_file_path, srt_file_path):
             subtitle_text_1 = row[1]
             subtitle_text_2 = row[2]
 
-            #removing the first word of both English and Non-English Subtitles:
+            #removing the first word of English 
             split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
+            print(split_subtitle_text_1)
             if len(split_subtitle_text_1) > 1:
                 subtitle_text_1 = split_subtitle_text_1[1]
             else:
                 subtitle_text_1 = ""
 
-            split_subtitle_text_2 = subtitle_text_2.split(' ', 1)
-            if len(split_subtitle_text_2) > 1:
-                subtitle_text_2 = split_subtitle_text_2[1]
-            else:
-                subtitle_text_2 = ""
+            # #removing everything before ":"
+
+            # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
+            # print(split_subtitle_text_1)
+            # if len(split_subtitle_text_1) > 1:
+            #     subtitle_text_1 = split_subtitle_text_1[1]
+            # else:
+            #     subtitle_text_1 = ""
+
+
+            #removing first word from non-english subtitles
+
+            # split_subtitle_text_2 = subtitle_text_2.split(' ', 1)
+            # if len(split_subtitle_text_2) > 1:
+            #     subtitle_text_2 = split_subtitle_text_2[1]
+            # else:
+            #     subtitle_text_2 = ""
+
+            #add column after non english speaker:
+            subtitle_text_2_ls = subtitle_text_2.split()
+            if len(subtitle_text_2_ls) > 0:
+                subtitle_text_2_ls[0] += ":"
+            subtitle_text_2 = ' '.join(subtitle_text_2_ls)
 
 
             srt_file.write(str(subtitle_count) + '\n')
@@ -48,8 +67,9 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
 
 # Usage example
-csv_file_path = 'Parsing2/output/sample4.csv'
-srt_file_path = 'subtitlessss.srt'
+#use sample 5 for no speakers and sample 4 for borth speakers
+csv_file_path = 'Parsing2/outputcsv/sample4.csv'
+srt_file_path = 'bothpeakers.srt'
 generate_srt_file(csv_file_path, srt_file_path)
 
 
