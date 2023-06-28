@@ -49,16 +49,11 @@ def create_subtitle_text_clips(subtitles, video_size):
         other_language_text_clip = TextClip(other_language, fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
         english_clip = TextClip(english, fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
-        subtitle_x_position = 'center'
         # Positioning and handling the subtitle for the non-English language
-        subtitle_y_position_non_eng = video_height * 0
-        text_position_non_eng = (subtitle_x_position, subtitle_y_position_non_eng)   
-        subtitle_clips.append(other_language_text_clip.set_position(text_position_non_eng))
+        subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
 
         # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
-        subtitle_y_position_eng = video_height * 9/10
-        text_position_eng = (subtitle_x_position, subtitle_y_position_eng)   
-        subtitle_clips.append(english_clip.set_position(text_position_eng))
+        subtitle_clips.append(english_clip.set_position(("center", "bottom")))
 
     return subtitle_clips
 
