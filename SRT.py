@@ -1,17 +1,27 @@
 #generating srt file.
 #Code Sample to convert CSV file to a subtitle file in srt format:
 
+'''
+To show both speakers you will need to uncomment the following:
+1.removing the first word of English 
+2.add column after non english speaker:
+
+
+To show no speakers you will need to uncomment the following:
+1.removing everything before ":"
+2.removing first word from non-english subtitles
+
+'''
+
 import csv
 
 
 def generate_srt_file(csv_file_path, srt_file_path):
     with open(csv_file_path, 'r') as csv_file, open(srt_file_path, 'w') as srt_file:
         reader = csv.reader(csv_file)
-        #next(reader)  # Skip the header row if present
         reader_list = list(reader)
 
         subtitle_count = 1
-        #print("reached1")
 
         for row_index, row in enumerate(reader_list, start=1):
             if row_index <= 9 or row_index == len(reader_list):
@@ -19,21 +29,16 @@ def generate_srt_file(csv_file_path, srt_file_path):
             start_time = row[0] + ",000"
             start_time = start_time.replace(" ", "")
             next_row = reader_list[row_index]
-            print(next_row[0])
             #if time is an empty string
             if next_row[0] is "":
-                print("reached")
                 next_row_2 = reader_list[row_index + 1]
                 end_time = next_row_2[0] + ",000"
-                print(end_time)
-                print("---")
                 end_time = end_time.replace(" ", "")
                 subtitle_text_1 = row[1] + next_row[1]
                 subtitle_text_2 = row[2] + next_row[2]
 
                 #removing the first word of English 
                 split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-                #print(split_subtitle_text_1)
                 if len(split_subtitle_text_1) > 1:
                     subtitle_text_1 = split_subtitle_text_1[1]
                 else:
@@ -73,7 +78,6 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
                 #removing the first word of English 
                 split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-                #print(split_subtitle_text_1)
                 if len(split_subtitle_text_1) > 1:
                     subtitle_text_1 = split_subtitle_text_1[1]
                 else:
@@ -82,7 +86,6 @@ def generate_srt_file(csv_file_path, srt_file_path):
                 # #removing everything before ":"
 
                 # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
-                # print(split_subtitle_text_1)
                 # if len(split_subtitle_text_1) > 1:
                 #     subtitle_text_1 = split_subtitle_text_1[1]
                 # else:
@@ -115,6 +118,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
 # Usage example
 #use sample 5 for no speakers and sample 4 for borth speakers
+#You can generate the csv files from finalcsv.py and then use the csv files inside outputcsv folder.
 csv_file_path = 'Parsing2/outputcsv/sample4.csv'
 srt_file_path = 'bothpeakers.srt'
 generate_srt_file(csv_file_path, srt_file_path)
