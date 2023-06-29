@@ -29,6 +29,9 @@ python3 final.py
 The project is structured as follows:
 
 - `final.py` contains the main project code to take in the input, create subtitle clips, perform formatting changes, and burns the subtiltes before writing out the outout video.
+- `finalcsv.py` contains the main code to turn PDF/DOCX files into CSV using various different formatting changes needed for the subtitles work
 - `/input` contains video input .mp4 files and their respective subtitles .srt files with same name
+- `/inputcsv` contains PDF/DOCX files that need to be turned into CSV files using Parsing work
 - `/output` contains output video .mp4 files with subtitles added
+- `/outputcsv` contains output CSV files generated from Parsing work(input of PDF/DOCX files)
 - `SRT.py` contains the main project code to generate a subtitles .srt file from the relevant CSV file
