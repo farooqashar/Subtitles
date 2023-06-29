@@ -39,6 +39,7 @@ The project is structured as follows:
 
 ## Customization
 
+### Formatting
 To change the formatting of the subtitles, change the options on the following lines for both the English clip and the non-English TextClip: 
 ```
         # Creating subtitle TextClips with some attributes(duration, start time, styling)
@@ -48,7 +49,23 @@ To change the formatting of the subtitles, change the options on the following l
 
 The following can be changed: 
 - fontsize (Font Size of the subtitle)
-- font (Font of the subtitle. Currently set to Arial. Availaible fonts can be viewed by running `print(TextClip.list('font')`
-- color (Color of the subtitle. For Non-english languages, the colors are currently red, yellow, and cyan. Availaible colors can be viewed by running `print(TextClip.list('color')`
+- font (Font of the subtitle. Currently set to Arial. Availaible fonts can be viewed by running `print(TextClip.list('font')`)
+- color (Color of the subtitle. For Non-english languages, the colors are currently red, yellow, and cyan. Availaible colors can be viewed by running `print(TextClip.list('color')`)
+- bg_color (Background color of the subtitle box. Availaible colors can be viewed by running `print(TextClip.list('color')`)
 
+### Layouts and Positions
 To change the layout and positions of the subtitles, change the following:
+```
+        # Positioning and handling the subtitle for the non-English language
+        subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
+
+        # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
+        subtitle_clips.append(english_clip.set_position(("center", "bottom")))
+```
+The position can be at bottom, top, etc. 
+
+To update the width of the subtitle box, multipy `video_width` by a number [0,1] in the following
+```
+        # Size of the subtitle picture/box in pixels (height is auto-determined/None)
+        size=(video_width, None) 
+```
