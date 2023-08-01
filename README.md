@@ -34,7 +34,7 @@ The project is structured as follows:
 - `/inputcsv` contains PDF/DOCX files that need to be turned into CSV files using Parsing work
 - `/output` contains output video .mp4 files with subtitles added
 - `/outputcsv` contains output CSV files generated from Parsing work(input of PDF/DOCX files)
-- `SRT.py` contains the main project code to generate a subtitles .srt file from the relevant CSV file
+- `csv_to_srt.py` contains the main project code to generate a subtitles .srt file from the relevant CSV file
 
 
 ## Customization

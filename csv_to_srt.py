@@ -30,7 +30,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
             start_time = start_time.replace(" ", "")
             next_row = reader_list[row_index]
             #if time is an empty string
-            if next_row[0] is "":
+            if next_row[0] == "":
                 next_row_2 = reader_list[row_index + 1]
                 end_time = next_row_2[0] + ",000"
                 end_time = end_time.replace(" ", "")
@@ -119,8 +119,8 @@ def generate_srt_file(csv_file_path, srt_file_path):
 # Usage example
 #use sample 5 for no speakers and sample 4 for borth speakers
 #You can generate the csv files from pdf_to_csv.py and then use the csv files inside outputcsv folder.
-csv_file_path = 'Parsing2/outputcsv/sample4.csv'
-srt_file_path = 'bothpeakers.srt'
+csv_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/outputcsv/1997_01-01 transcript.csv'
+srt_file_path = 'example_srt_file.srt'
 generate_srt_file(csv_file_path, srt_file_path)
 
 
