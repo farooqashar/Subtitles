@@ -118,7 +118,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
 # Usage example
 #use sample 5 for no speakers and sample 4 for borth speakers
-#You can generate the csv files from finalcsv.py and then use the csv files inside outputcsv folder.
+#You can generate the csv files from pdf_to_csv.py and then use the csv files inside outputcsv folder.
 csv_file_path = 'Parsing2/outputcsv/sample4.csv'
 srt_file_path = 'bothpeakers.srt'
 generate_srt_file(csv_file_path, srt_file_path)

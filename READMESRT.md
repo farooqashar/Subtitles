@@ -5,7 +5,7 @@ This code is a Python script that converts a CSV file containing subtitle inform
 ## Usage
 
 1. Ensure you have Python installed on your system.
-2. Prepare the CSV file that contains the subtitle information. You can generate the CSV file using the `finalcsv.py` script. Your csv files will be saved inside the `outputcsv` folder.
+2. Prepare the CSV file that contains the subtitle information. You can generate the CSV file using the `pdf_to_csv.py` script. Your csv files will be saved inside the `outputcsv` folder.
 3. Modify the `csv_file_path` variable to specify the path of your input CSV file. For example:
    ```
    csv_file_path = 'outputcsv/sample4.csv'

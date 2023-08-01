@@ -7,13 +7,13 @@ from pdf2docx import Converter
 
 # Define the input folder path
 adan_input = "/Users/adana/Downloads/Subtitles/Subtitles2/Parsing2/input"
-ashar_input = "/Users/asharfarooq/Downloads/Uliza/Parsing/input"
-input_folder_path = adan_input  # Update with your input folder path
+ashar_input = "/Users/asharfarooq/Downloads/Uliza/Subtitles/inputcsv"
+input_folder_path = ashar_input  # Update with your input folder path
 
 # Define the output folder path
 adan_output = "/Users/adana/Downloads/Subtitles/Subtitles2/Parsing2/output"
-ashar_output = "/Users/asharfarooq/Downloads/Uliza/Parsing/output"
-output_folder_path = adan_output  # Update with your output folder path
+ashar_output = "/Users/asharfarooq/Downloads/Uliza/Subtitles/outputcsv"
+output_folder_path = ashar_output  # Update with your output folder path
 
 # Create the output folder if it doesn't exist
 if not os.path.exists(output_folder_path):
