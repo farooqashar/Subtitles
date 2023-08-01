@@ -11,7 +11,7 @@ Programmatically add subtitles to video (MP4) from CSV transcripts and timestamp
 ## Cloning
 To clone the repository on local machine, run:
 ```
-git clone https://github.com/farooqashar/Subtitles.git
+git clone https://github.com/uliza/Subtitles.git
 ```
 
 ## Running Locally 
