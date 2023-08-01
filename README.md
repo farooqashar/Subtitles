@@ -21,14 +21,14 @@ git clone https://github.com/farooqashar/Subtitles.git
 2. cd into the Subtitles folder and run:
 
 ```
-python3 final.py
+python3 srt_to_mp4.py
 ```
 
 ## Code
 
 The project is structured as follows:
 
-- `final.py` contains the main project code to take in the input, create subtitle clips, perform formatting changes, and burns the subtiltes before writing out the outout video.
+- `srt_to_mp4.py` contains the main project code to take in the input, create subtitle clips, perform formatting changes, and burns the subtiltes before writing out the outout video.
 - `pdf_to_csv.py` contains the main code to turn PDF/DOCX files into CSV using various different formatting changes needed for the subtitles work
 - `/input` contains video input .mp4 files and their respective subtitles .srt files with same name
 - `/inputcsv` contains PDF/DOCX files that need to be turned into CSV files using Parsing work
