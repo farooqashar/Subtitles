@@ -69,3 +69,9 @@ To update the width of the subtitle box, multipy `video_width` by a number [0,1]
         # Size of the subtitle picture/box in pixels (height is auto-determined/None)
         size=(video_width, None) 
 ```
+## Creating just a Sample
+srt_to_mp4.py
+- Comment out actual writing frame row: row 105
+- Comment out actual video in loading input video and opening subtitles file row : row 90
+- Uncomment out Preview video without writing frame row : row 102
+- uncomment Loading input video and opening subtitles file row : row 92 
