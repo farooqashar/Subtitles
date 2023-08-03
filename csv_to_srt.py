@@ -12,6 +12,7 @@ To remove speaker for the Non-English text:
 '''
 
 import csv
+import os
 
 
 def generate_srt_file(csv_file_path, srt_file_path):
@@ -128,12 +129,26 @@ def generate_srt_file(csv_file_path, srt_file_path):
             subtitle_count += 1
 
 
-# Usage example
-#use sample 5 for no speakers and sample 4 for borth speakers
+# Usage Example
 #You can generate the csv files from pdf_to_csv.py and then use the csv files inside outputcsv folder.
-csv_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/outputcsv/1997_01-01 transcript.csv'
-srt_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/input/input.srt'
-generate_srt_file(csv_file_path, srt_file_path)
+
+## SETUP ##
+
+# Define the input and output folder paths
+csv_input_folder = '/Users/asharfarooq/Downloads/Uliza/Subtitles/inputsrt'
+srt_output_folder = '/Users/asharfarooq/Downloads/Uliza/Subtitles/outputsrt'
+
+# Create the output folder if it doesn't exist
+if not os.path.exists(srt_output_folder):
+    os.makedirs(srt_output_folder)
+
+# Iterate over each file in the input folder
+for file_name in os.listdir(csv_input_folder):
+    # Construct the full file paths
+    csv_file_path = os.path.join(csv_input_folder, file_name)
+    srt_file_path = os.path.join(srt_output_folder, f'{os.path.splitext(file_name)[0]}.srt')
+
+    generate_srt_file(csv_file_path, srt_file_path)
 
 
 
