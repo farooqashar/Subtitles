@@ -75,3 +75,13 @@ srt_to_mp4.py
 - Comment out actual video in loading input video and opening subtitles file row : row 90
 - Uncomment out Preview video without writing frame row : row 102
 - uncomment Loading input video and opening subtitles file row : row 92 
+
+## Toggling Removing Speakers of English or Non-English Text
+
+To remove speaker for the English text:
+1. uncomment the section `Removing Speaker for English Text`
+
+
+To remove speaker for the Non-English text:
+1. uncomment the section `Removing Speaker for Non-English Text`
+
