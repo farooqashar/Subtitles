@@ -1,16 +1,13 @@
 #generating srt file.
 #Code Sample to convert CSV file to a subtitle file in srt format:
 
-# [SPEAKER HANDLING CURRENTLY NOT IN USE...SIMPLY SHOWS BOTH SPEAKERS AS THEY APPEAR IN ORIGINAL DOCUMENT]
 '''
-To show both speakers you will need to uncomment the following:
-1.removing the first word of English 
-2.add column after non english speaker:
+To remove speaker for the English text:
+1. uncomment the section `# Removing Speaker for English Text`
 
 
-To show no speakers you will need to uncomment the following:
-1.removing everything before ":"
-2.removing first word from non-english subtitles
+To remove speaker for the Non-English text:
+1. uncomment the section `# Removing Speaker for Non-English Text`
 
 '''
 
@@ -40,15 +37,6 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
                 # #removing the first word of English 
                 # split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-                # if len(split_subtitle_text_1) > 1:
-                #     subtitle_text_1 = split_subtitle_text_1[1]
-                # else:
-                #     subtitle_text_1 = ""
-
-                # #removing everything before ":"
-
-                # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
-                # print(split_subtitle_text_1)
                 # if len(split_subtitle_text_1) > 1:
                 #     subtitle_text_1 = split_subtitle_text_1[1]
                 # else:
@@ -84,14 +72,6 @@ def generate_srt_file(csv_file_path, srt_file_path):
                 # else:
                 #     subtitle_text_1 = ""
 
-                # #removing everything before ":"
-
-                # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
-                # if len(split_subtitle_text_1) > 1:
-                #     subtitle_text_1 = split_subtitle_text_1[1]
-                # else:
-                #     subtitle_text_1 = ""
-
 
                 #removing first word from non-english subtitles
 
@@ -121,7 +101,24 @@ def generate_srt_file(csv_file_path, srt_file_path):
             if "<nuu>" in subtitle_text_2 and "</nuu>" in subtitle_text_2:
                 subtitle_text_2=subtitle_text_2.replace("<nuu>",">")
                 subtitle_text_2=subtitle_text_2.replace("</nuu>",">")
-            
+
+            # # Removing Speaker for English Text
+            # split_subtitle_text_1 = subtitle_text_1.split(':', 1)
+            # if len(split_subtitle_text_1) > 1:
+            #     subtitle_text_1 = split_subtitle_text_1[1]
+            # else:
+            #     subtitle_text_1 = ""
+                
+            # # Removing Speaker for Non-English Text
+            # subtitle_text_2 = subtitle_text_2.split(':', 1)
+            # if len(subtitle_text_2) > 1:
+            #     subtitle_text_2 = subtitle_text_2[1]
+            # else:
+            #     subtitle_text_2 = ""      
+
+            subtitle_text_1.lstrip()
+            subtitle_text_2.lstrip()
+
             srt_file.write(str(subtitle_count) + '\n')
             srt_file.write(start_time + ' --> ' + end_time + '\n')
             srt_file.write(subtitle_text_1 + '\n')
