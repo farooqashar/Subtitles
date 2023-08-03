@@ -1,6 +1,7 @@
 #generating srt file.
 #Code Sample to convert CSV file to a subtitle file in srt format:
 
+# [SPEAKER HANDLING CURRENTLY NOT IN USE...SIMPLY SHOWS BOTH SPEAKERS AS THEY APPEAR IN ORIGINAL DOCUMENT]
 '''
 To show both speakers you will need to uncomment the following:
 1.removing the first word of English 
