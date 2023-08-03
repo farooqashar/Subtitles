@@ -28,13 +28,15 @@ python3 srt_to_mp4.py
 
 The project is structured as follows:
 
-- `srt_to_mp4.py` contains the main project code to take in the input, create subtitle clips, perform formatting changes, and burns the subtiltes before writing out the outout video.
 - `pdf_to_csv.py` contains the main code to turn PDF/DOCX files into CSV using various different formatting changes needed for the subtitles work
+- `csv_to_srt.py` contains the main project code to generate a subtitles .srt file from the relevant CSV file
+- `srt_to_mp4.py` contains the main project code to take in the input, create subtitle clips, perform formatting changes, and burns the subtiltes before writing out the outout video.
 - `/input` contains video input .mp4 files and their respective subtitles .srt files with same name
 - `/inputcsv` contains PDF/DOCX files that need to be turned into CSV files using Parsing work
+- `/inputsrt` contains CSV files that need to be turned into SRT files csv_to_srt.py
 - `/output` contains output video .mp4 files with subtitles added
 - `/outputcsv` contains output CSV files generated from Parsing work(input of PDF/DOCX files)
-- `csv_to_srt.py` contains the main project code to generate a subtitles .srt file from the relevant CSV file
+- `/outputsrt` contains output SRT files generated from CSV to SRT work(input of CSV files)
 
 
 ## Customization
@@ -77,6 +79,7 @@ srt_to_mp4.py
 - uncomment Loading input video and opening subtitles file row : row 92 
 
 ## Toggling Removing Speakers of English or Non-English Text
+** In csv_to_srt.py**
 
 To remove speaker for the English text:
 1. uncomment the section `Removing Speaker for English Text`
