@@ -15,16 +15,15 @@ This code is a Python script that converts a CSV file containing subtitle inform
    srt_file_path = 'bothspeakers.srt'
    ```
 6. Uncomment the desired section based on your requirements. The script provides two options:
-   - To show both speakers, uncomment the following code block:
-     ```
-     # removing the first word of English 
-     # add column after non-english speaker
-     ```
-   - To show no speakers, uncomment the following code block:
-     ```
-     # removing everything before ":"
-     # removing first word from non-english subtitles
-     ```
+'''
+To remove speaker for the English text:
+1. uncomment the section `# Removing Speaker for English Text`
+
+
+To remove speaker for the Non-English text:
+1. uncomment the section `# Removing Speaker for Non-English Text`
+
+'''
 7. Save the changes to the script.
 8. Run the script. It will read the CSV file, process the subtitle data, and generate the corresponding SRT file.
 
