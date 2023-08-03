@@ -24,7 +24,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
         subtitle_count = 1
 
         for row_index, row in enumerate(reader_list, start=1):
-            if row_index <= 9 or row_index == len(reader_list):
+            if row_index == len(reader_list):
                 continue
             start_time = row[0] + ",000"
             start_time = start_time.replace(" ", "")
@@ -37,12 +37,12 @@ def generate_srt_file(csv_file_path, srt_file_path):
                 subtitle_text_1 = row[1] + next_row[1]
                 subtitle_text_2 = row[2] + next_row[2]
 
-                #removing the first word of English 
-                split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-                if len(split_subtitle_text_1) > 1:
-                    subtitle_text_1 = split_subtitle_text_1[1]
-                else:
-                    subtitle_text_1 = ""
+                # #removing the first word of English 
+                # split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
+                # if len(split_subtitle_text_1) > 1:
+                #     subtitle_text_1 = split_subtitle_text_1[1]
+                # else:
+                #     subtitle_text_1 = ""
 
                 # #removing everything before ":"
 
@@ -76,12 +76,12 @@ def generate_srt_file(csv_file_path, srt_file_path):
                 subtitle_text_1 = row[1] 
                 subtitle_text_2 = row[2]
 
-                #removing the first word of English 
-                split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
-                if len(split_subtitle_text_1) > 1:
-                    subtitle_text_1 = split_subtitle_text_1[1]
-                else:
-                    subtitle_text_1 = ""
+                # #removing the first word of English 
+                # split_subtitle_text_1 = subtitle_text_1.split(' ', 1)
+                # if len(split_subtitle_text_1) > 1:
+                #     subtitle_text_1 = split_subtitle_text_1[1]
+                # else:
+                #     subtitle_text_1 = ""
 
                 # #removing everything before ":"
 
@@ -100,13 +100,27 @@ def generate_srt_file(csv_file_path, srt_file_path):
                 # else:
                 #     subtitle_text_2 = ""
 
-                #add column after non english speaker:
-                subtitle_text_2_ls = subtitle_text_2.split()
-                if len(subtitle_text_2_ls) > 0:
-                    subtitle_text_2_ls[0] += ":"
-                subtitle_text_2 = ' '.join(subtitle_text_2_ls)
+                # #add column after non english speaker:
+                # subtitle_text_2_ls = subtitle_text_2.split()
+                # if len(subtitle_text_2_ls) > 0:
+                #     subtitle_text_2_ls[0] += ":"
+                # subtitle_text_2 = ' '.join(subtitle_text_2_ls)
 
+            # Handling language encoding for Afrikaans tags
+            if "<afr>" in subtitle_text_2 and "</afr>" in subtitle_text_2:
+                subtitle_text_2=subtitle_text_2.replace("<afr>","$")
+                subtitle_text_2=subtitle_text_2.replace("</afr>","$")
+        
+            # Handling language encoding for Nama tags
+            if "<nam>" in subtitle_text_2 and "</nam>" in subtitle_text_2:
+                subtitle_text_2=subtitle_text_2.replace("<nam>","+")
+                subtitle_text_2=subtitle_text_2.replace("</nam>","+")
 
+            # Handling language encoding for N|uu tags
+            if "<nuu>" in subtitle_text_2 and "</nuu>" in subtitle_text_2:
+                subtitle_text_2=subtitle_text_2.replace("<nuu>",">")
+                subtitle_text_2=subtitle_text_2.replace("</nuu>",">")
+            
             srt_file.write(str(subtitle_count) + '\n')
             srt_file.write(start_time + ' --> ' + end_time + '\n')
             srt_file.write(subtitle_text_1 + '\n')
@@ -120,7 +134,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
 #use sample 5 for no speakers and sample 4 for borth speakers
 #You can generate the csv files from pdf_to_csv.py and then use the csv files inside outputcsv folder.
 csv_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/outputcsv/1997_01-01 transcript.csv'
-srt_file_path = 'example_srt_file.srt'
+srt_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/input/input.srt'
 generate_srt_file(csv_file_path, srt_file_path)
 
 

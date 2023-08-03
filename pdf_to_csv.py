@@ -5,13 +5,15 @@ import csv
 import xml.etree.ElementTree as ET
 from pdf2docx import Converter
 
+## SETUP ##
+
 # Define the input folder path
-adan_input = "/Users/adana/Downloads/Subtitles/Subtitles2/Parsing2/input"
+adan_input = "/Users/adana/Downloads/Parsing/Parsing/input"
 ashar_input = "/Users/asharfarooq/Downloads/Uliza/Subtitles/inputcsv"
 input_folder_path = ashar_input  # Update with your input folder path
 
 # Define the output folder path
-adan_output = "/Users/adana/Downloads/Subtitles/Subtitles2/Parsing2/output"
+adan_output = "/Users/adana/Downloads/Parsing/Parsing/output"
 ashar_output = "/Users/asharfarooq/Downloads/Uliza/Subtitles/outputcsv"
 output_folder_path = ashar_output  # Update with your output folder path
 
@@ -57,13 +59,19 @@ for file_name in os.listdir(input_folder_path):
         '1155CC': 'afr',
         '006FC0': 'afr',
         '00AF50': 'nuu',
-        '008000': 'nuu'
+        '008000': 'nuu', 
+        '0070C0': 'afr', 
+
         # Add more color to language mappings as needed
     }
 
+## SETUP ##
+
+## XML GENERATION  ##
+
     # Iterate through each table in the document
     for table_index, table in enumerate(doc.tables):
-        # Check if it is the first table
+        # Check if it is the first table [SPECIAL CASE OF FIRST TABLE]
         if table_index == 0:
             # Create a new XML element for the table
             table_element = ET.SubElement(root, 'table')
@@ -87,11 +95,12 @@ for file_name in os.listdir(input_folder_path):
         else:
 
             # Create a new XML element for the table
-
+            
             table_element = ET.SubElement(root, 'table')
-
             # Iterate through each row in the table
             for row_index , row in enumerate(list(table.rows)):
+
+                # SPECIAL CASE OF TOP 2 ROWS OF METADATA IN THE SECOND TABLE IN THE DOCUMENT
                 if table_index == 1 and row_index in [0,1]:
                     # Create a new XML element for the row
                     row_element = ET.SubElement(table_element, 'row')
@@ -107,7 +116,6 @@ for file_name in os.listdir(input_folder_path):
                         # Add the text to the cell element
                         cell_element.text = cell_text
                     continue
-
 
                 # Create a new XML element for the row
                 row_element = ET.SubElement(table_element, 'row')
@@ -134,7 +142,6 @@ for file_name in os.listdir(input_folder_path):
 
                     # Create a list to store language-specific text
                     language_text_list = []
-
                     # Iterate through each paragraph in the cell
                     for paragraph in cell.paragraphs:
                         # Create a dictionary to store run-specific text and color
@@ -142,6 +149,7 @@ for file_name in os.listdir(input_folder_path):
 
                         # Iterate through each run in the paragraph
                         for run in paragraph.runs:
+
                             # Extract the text color from the run
                             text_color = None
                             if run.font.color.rgb is None:
@@ -152,26 +160,26 @@ for file_name in os.listdir(input_folder_path):
                             # Extract the text from the run
                             run_text = run.text
 
-                            # Extracting run text that is the speaker name(identified by ': ' in the conversation)
-                            if run_text and run_text[-2:] == ": ":
-                                    speaker = run_text[:-2]
+                            # Extracting run text that is the speaker name(identified by ': ' in the conversation) [SPEAKER NOT IN USE CURRENTLY]
+                            # if run_text and run_text[-2:] == ": ":
+                            #         speaker = run_text[:-2]
 
-                                    # Acquiring speaker name when speaker is off screen (OS)
-                                    if speaker.startswith("OS"):
-                                        # Case of OS (name)
-                                        if "(" in speaker:
-                                            starting_index = speaker.index("(")
-                                            ending_index = speaker.index(")")
-                                            speaker = speaker[starting_index+1:ending_index]
-                                        # Case of OS 2 (no parentheses)
-                                        else:
-                                            speaker = speaker[3:]
+                            #         # # Acquiring speaker name when speaker is off screen (OS)
+                            #         # if speaker.startswith("OS"):
+                            #         #     # Case of OS (name)
+                            #         #     if "(" in speaker:
+                            #         #         starting_index = speaker.index("(")
+                            #         #         ending_index = speaker.index(")")
+                            #         #         speaker = speaker[starting_index+1:ending_index]
+                            #         #     # Case of OS 2 (no parentheses)
+                            #         #     else:
+                            #         #         speaker = speaker[3:]
                                 
-                                    # Creating speaker tag
-                                    speaker_element = ET.SubElement(cell_element, "speaker")
-                                    speaker_element.text = speaker
+                            #         # Creating speaker tag
+                            #         speaker_element = ET.SubElement(cell_element, "speaker")
+                            #         speaker_element.text = speaker
                             # Extracting timestamp information
-                            elif run_text.count(":") == 2:
+                            if run_text.count(":") == 2:
                                     # Creating time tag
                                     time_element = ET.SubElement(cell_element, "time")
                                     time_element.text = run_text
@@ -197,24 +205,24 @@ for file_name in os.listdir(input_folder_path):
                             sub_cell_element.text = text
                         else:
 
-                            # If English, also extracting the speaker and adding a speaker tag  (second column speaker)
-                            if language == 'eng' and ":" in text and not run_text.count(":") == 2:
-                                speaker = text[:text.index(":")]
+                            # # If English, also extracting the speaker and adding a speaker tag  (second column speaker) [SPEAKER NOT IN USE CURRENTLY]
+                            # if language == 'eng' and ":" in text and not run_text.count(":") == 2:
+                            #     speaker = text[:text.index(":")]
 
-                                # Acquiring speaker name when speaker is off screen (OS)
-                                if speaker.startswith("OS"):
-                                    # Case of OS (name)
-                                    if "(" in speaker:
-                                        starting_index = speaker.index("(")
-                                        ending_index = speaker.index(")")
-                                        speaker = speaker[starting_index+1:ending_index]
-                                    # Case of OS 2 (no parentheses)
-                                    else:
-                                        speaker = speaker[3:]
+                            #     # Acquiring speaker name when speaker is off screen (OS)
+                            #     if speaker.startswith("OS"):
+                            #         # Case of OS (name)
+                            #         if "(" in speaker:
+                            #             starting_index = speaker.index("(")
+                            #             ending_index = speaker.index(")")
+                            #             speaker = speaker[starting_index+1:ending_index]
+                            #         # Case of OS 2 (no parentheses)
+                            #         else:
+                            #             speaker = speaker[3:]
 
-                                # Creating speaker tag
-                                speaker_element = ET.SubElement(cell_element, "speaker")
-                                speaker_element.text = speaker
+                            #     # Creating speaker tag
+                            #     speaker_element = ET.SubElement(cell_element, "speaker")
+                            #     speaker_element.text = speaker
                             
                             # Adding the rest of the language tags
                             language_element = ET.SubElement(cell_element, language)
@@ -227,21 +235,42 @@ for file_name in os.listdir(input_folder_path):
     xml_file_path = os.path.join(output_folder_path, f'{os.path.splitext(file_name)[0]}.xml')
     tree.write(xml_file_path)
 
+## XML GENERATION  ##
+
+## CSV GENERATION ##
+
+    # Getting the header rows content
+    section = doc.sections[0]
+    header = section.header
+    header_row_data = []
+
+    if header.tables:
+        table = header.tables[0]
+
+        # Access rows and cells in the header table
+        for row in table.rows:
+            for cell in row.cells:
+                # Store the content of each cell in the header table
+                header_row_data.append(cell.text)
+
+
     # Generate the CSV file path
     csv_file_path = os.path.join(output_folder_path, f'{os.path.splitext(file_name)[0]}.csv')
 
-    # Open the CSV file in write mode
-    # with open(csv_file_path, 'w', newline='') as csv_file:
-    #     writer = csv.writer(csv_file)
+    # Generate the metadata CSV file path
+    metadata_csv_file_path = os.path.join(output_folder_path, f'{os.path.splitext(file_name)[0]} metadata.csv')
 
-
-    # Open the CSV file in write mode
-    with open(csv_file_path, 'w', newline='', encoding='utf-8') as csv_file:
+    # Open the CSV files in write mode
+    with open(csv_file_path, 'w', newline='', encoding='utf-8') as csv_file, open(metadata_csv_file_path, 'w', newline='', encoding='utf-8') as metadata_csv_file:
         writer = csv.writer(csv_file)
+        metadata_writer = csv.writer(metadata_csv_file)
+
+        # Adding header row to the CSV file
+        writer.writerow(header_row_data)
 
         # Iterate through each table in the XML
         for table_index, table in enumerate(root.iter('table')):
-            # Check if it is the first table
+            # Check if it is the first table [SPECIAL CASE OF FIRST TABLE OF DOCUMENT]
             if table_index == 0:
                 # Iterate through each row in the table
                 for row in table.iter('row'):
@@ -253,10 +282,10 @@ for file_name in os.listdir(input_folder_path):
                         # Append the text of the cell to the row data list
                         row_data.append(cell.text)
 
-                    # Write the row data to the CSV file
-                    writer.writerow(row_data)
+                    # Write the row data to the metadata CSV file
+                    metadata_writer.writerow(row_data)
             else:
-                #skip the odd tables 
+                #skip the odd tables [SPECIAL CASE OF SKIPPING THE REPETITIVE TOP TABLE OF EACH PAGE AFTER FIRST PAGE]
                 if table_index%2 == 0:
                     continue 
                 else:
@@ -267,7 +296,8 @@ for file_name in os.listdir(input_folder_path):
                     for row_index , row in enumerate(table.iter('row')):
                         # Create a list to store the data for each cell in the row
 
-                        if row_index in [0,1] and table_index == 1:
+                        # SPECIAL CASE OF TOP 2 ROWS OF METADATA IN THE SECOND TABLE IN THE DOCUMENT
+                        if row_index in [0,1] and table_index == 1: 
                             row_data = []
 
                             # Iterate through each cell in the row
@@ -277,8 +307,8 @@ for file_name in os.listdir(input_folder_path):
                                 # Append the text of the cell to the row data list
                                 row_data.append(cell.text)
 
-                            # Write the row data to the CSV file
-                            writer.writerow(row_data)
+                            # Write the row data to the metadata CSV file
+                            metadata_writer.writerow(row_data)
                             continue 
 
                         row_data = []
@@ -292,27 +322,16 @@ for file_name in os.listdir(input_folder_path):
 
                             # Iterate through each language or sub-cell tag in the cell
                             for element in cell:
-                                if element.tag == 'nam':
-                                    text = "+" + element.text
-                                    #text = f"<{element.tag}>{element.text}</{element.tag}>"
-                                elif element.tag == 'afr':
-                                    text = "$" + element.text
-                                elif element.tag == 'nuu':
-                                    text = ">" + element.text
-                                else:
+                                # Check if the element is a language tag or sub-cell tag
+                                if element.tag == 'sub-cell':
+                                    # Handle sub-cell
                                     text = element.text
-                                # # Check if the element is a language tag or sub-cell tag
-                                # if element.tag == 'sub-cell':
-                                #     # Handle sub-cell
-                                #     text = element.text
-                                # if element.tag == 'time':
-                                #     text = element.text
-                                # elif element.tag in ['notes' , 'speaker' ]:
-                                #     #text = f"<{element.tag}>{element.text}</{element.tag}>"
-                                # else:
-                                #     # Handle language tag
-                                #     #text = f"<{element.tag}>{element.text}</{element.tag}>"
-
+                                # Not adding any tags for these xml tags in the CSV
+                                elif element.tag in ['notes', 'time', 'eng']:
+                                    text = element.text
+                                else:
+                                    # Handle language tag
+                                    text = f"<{element.tag}>{element.text}</{element.tag}>"
 
                                 # Append the text to the cell data list
                                 cell_data.append(text)
@@ -323,9 +342,11 @@ for file_name in os.listdir(input_folder_path):
                         # Append the row data to the table data list
                         table_data.append(row_data)
 
-                    # Write the table data to the CSV file
+                    # Write the table data to the CSV files
                     writer.writerows(table_data)
 
     print(f"Processed file: {file_name}")
+
+## CSV GENERATION ##
 
 print("Conversion complete.")
