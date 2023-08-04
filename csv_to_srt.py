@@ -134,6 +134,7 @@ def generate_srt_file(csv_file_path, srt_file_path):
 
 ## SETUP ##
 
+# FOR DOING DIRECTORY
 # Define the input and output folder paths
 csv_input_folder = '/Users/asharfarooq/Downloads/Uliza/Subtitles/inputsrt'
 srt_output_folder = '/Users/asharfarooq/Downloads/Uliza/Subtitles/outputsrt'
@@ -150,6 +151,11 @@ for file_name in os.listdir(csv_input_folder):
 
     generate_srt_file(csv_file_path, srt_file_path)
 
+# FOR DOING ONE FILE
+# Define the input and output folder paths
+# csv_input_file_path = '/Users/asharfarooq/Downloads/Uliza/Subtitles/inputsrt/1997_01-01transcript.csv'
+# srt_output_file_path = "/Users/asharfarooq/Downloads/Uliza/Subtitles/outputsrt/1997_01-01transcript.srt"
+# generate_srt_file(csv_input_file_path, srt_output_file_path)
 
 
 
