@@ -12,7 +12,7 @@ def time_to_seconds(time):
 # Creating TextClip objects for each subtitle in the SRT file with some styling
 def create_subtitle_text_clips(subtitles, video_size):
 
-    video_width, _ = video_size
+    video_width, video_height = video_size
 
     subtitle_clips = []
     for subtitle in subtitles:
@@ -49,11 +49,19 @@ def create_subtitle_text_clips(subtitles, video_size):
         other_language_text_clip = TextClip(''.join(other_language.splitlines()), fontsize=22, font="Arial", color=non_eng_language_color, bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
         english_clip = TextClip(''.join(english.splitlines()), fontsize=22, font="STIXGeneral-Italic", color="white", bg_color = 'black',size=size, method='caption').set_start(start_time).set_duration(subtitle_duration)
 
+        ## BOTH CLIPS SAME SECTION CODE
         # Positioning and handling the subtitle for the non-English language
-        subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
-
+        subtitle_y_position_non_eng = video_height * 8/10
+        subtitle_clips.append(other_language_text_clip.set_position(("center", subtitle_y_position_non_eng)))
         # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
-        subtitle_clips.append(english_clip.set_position(("center", "bottom")))
+        subtitle_clips.append(english_clip.set_position(("center", subtitle_y_position_non_eng + other_language_text_clip.size[1])))
+
+        ## TOP AND BOTTOM CLIPS DIFFERENT SECTION CODE
+        # # Positioning and handling the subtitle for the non-English language
+        # subtitle_clips.append(other_language_text_clip.set_position(("center", "top")))
+
+        # # Positioning and handling the subtitle for the English language (right below the non-English TextClip)
+        # subtitle_clips.append(english_clip.set_position(("center", "bottom")))
 
     return subtitle_clips
 
